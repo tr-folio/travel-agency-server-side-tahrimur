@@ -5,6 +5,7 @@ import BlogDetail from './Components/Home/Blogs/BlogDetail';
 import Home from './Components/Home/Home';
 import Login from './Components/Login/Login';
 import Register from './Components/Login/Register';
+import Dashboard from './Components/Dashboard/dashboard';
 
 function App() {
   // travel1: https://i.ibb.co/xXgrK3N/travel1.jpg
@@ -19,6 +20,7 @@ function App() {
           <Route path="/blog-detail/:id" element={<BlogDetail/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
+          <Route path="/dashboard" element={<Dashboard/>}/>
         </Routes>
       </BrowserRouter>
     </div>

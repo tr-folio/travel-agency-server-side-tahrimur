@@ -18,6 +18,9 @@ const Header = () => {
                     {!localStorage.getItem("username") && <Nav.Link as={HashLink} to="/login">Login</Nav.Link>}
                 </Nav.Item>
                 <Nav.Item>
+                    {localStorage.getItem("username") && <Nav.Link as={HashLink} to="/dashboard">Dashboard</Nav.Link>}
+                </Nav.Item>
+                <Nav.Item>
                     {localStorage.getItem("username") && <Nav.Link style={{color: 'black', cursor: 'default'}}>{localStorage.getItem("username")}</Nav.Link>}
                 </Nav.Item>
                 <Nav.Item>

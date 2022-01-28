@@ -35,7 +35,7 @@ const BlogDetail = () => {
                             <strong>Time: </strong>{blog.time}&nbsp;|&nbsp;
                             <strong>Rating: </strong>
                             <Rating
-                                initialRating={3}
+                                initialRating={blog.rating}
                                 fullSymbol={<i className="fa fa-star checked"></i>}
                                 emptySymbol={<i className="fa fa-star"></i>}
                             />
