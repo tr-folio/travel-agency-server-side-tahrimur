@@ -1,11 +1,14 @@
 import React from "react";
+import Footer from "../Shared/Footer";
+import Header from "../Shared/Header";
 import TopBanner from "./TopBanner/TopBanner";
 
 const Home = () => {
     return (
         <div>
-            <h1>This is Home</h1>
+            <Header/>
             <TopBanner/>
+            <Footer/>
         </div>
     );
 };
