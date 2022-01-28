@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import initializeFirebase from "../Firebase/firebase.init";
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 
 // initialize firebase app
 initializeFirebase();
@@ -23,6 +23,24 @@ const useFirebase = () => {
         })
         .catch((error) => {
             setAuthError(error.message);
+        });
+    }
+
+    // logout
+    const logout = () => {
+        setIsLoading(true);
+        signOut(auth).then(() => {
+            setUser({});
+            localStorage.removeItem("username");
+            localStorage.removeItem("useremail");
+            localStorage.removeItem("useradmin");
+        })
+        .catch((error) => {
+            setAuthError(error.message);
+        })
+        .finally(() => {
+            setIsLoading(false);
+            window.location.reload();
         });
     }
 
@@ -54,6 +72,7 @@ const useFirebase = () => {
             // console.log(data.acknowledged);
             if (data.acknowledged === true) {
                 localStorage.setItem("username", user.displayName);
+                localStorage.setItem("useremail", user.email);
             }
         })
     }
@@ -62,7 +81,8 @@ const useFirebase = () => {
         user,
         isLoading,
         authError,
-        registerUser
+        registerUser,
+        logout
     }
 }
 
