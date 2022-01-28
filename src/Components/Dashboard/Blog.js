@@ -26,7 +26,7 @@ const Blog = ({ blog }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        fetch(`http://localhost:5000/update-blog/${blog._id}`, {
+        fetch(`https://mysterious-inlet-93835.herokuapp.com/update-blog/${blog._id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

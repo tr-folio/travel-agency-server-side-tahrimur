@@ -9,7 +9,7 @@ const BlogDetail = () => {
     const {id} = useParams();
     const [blog, setBlog] = useState({});
     useEffect(() => {
-        fetch(`http://localhost:5000/single-blog/${id}`)
+        fetch(`https://mysterious-inlet-93835.herokuapp.com/single-blog/${id}`)
         .then(res => res.json())
         .then((data) => {
             // console.log(data);

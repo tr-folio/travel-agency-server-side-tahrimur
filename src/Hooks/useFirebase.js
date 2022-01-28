@@ -75,7 +75,7 @@ const useFirebase = () => {
     // save user
     const saveUser = (email, displayName) => {
         const user = {email: email, displayName: displayName, role: 'user'};
-        fetch('http://localhost:5000/save-user', {
+        fetch('https://mysterious-inlet-93835.herokuapp.com/save-user', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -93,7 +93,7 @@ const useFirebase = () => {
 
     // check if current user is an admin or normal user
     useEffect(() => {
-        fetch(`http://localhost:5000/single-user/${user.email}`)
+        fetch(`https://mysterious-inlet-93835.herokuapp.com/single-user/${user.email}`)
         .then(res => res.json())
         .then((data) => {
             if (data.role === "admin") {
