@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Spinner} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import useFirebase from "../../Hooks/useFirebase";
+import Header from "../Shared/Header";
 
 const Register = () => {
     const { registerUser, user, isLoading, authError } = useFirebase();
@@ -29,6 +30,7 @@ const Register = () => {
 
     return (
         <div>
+            <Header/>
             <h1>Please Register</h1>
             <Container>
                 <form onSubmit={handleRegister}>

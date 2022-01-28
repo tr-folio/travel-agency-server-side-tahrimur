@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import initializeFirebase from "../Firebase/firebase.init";
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword } from "firebase/auth";
 
 // initialize firebase app
 initializeFirebase();
@@ -12,13 +12,27 @@ const useFirebase = () => {
 
     const auth = getAuth();
 
+    // register with email and password
     const registerUser = (email, password, name) => {
         setIsLoading(true);
         createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => { 
-            const user = userCredential.user;
-            setUser(user);
+        .then((userCredential) => {
+            setUser(userCredential.user);
             saveUser(email, name);
+            setIsLoading(false);
+        })
+        .catch((error) => {
+            setAuthError(error.message);
+        });
+    }
+
+    // login with email and password
+    const login = (email, password) => {
+        setIsLoading(true);
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            setUser(userCredential.user);
+            localStorage.setItem("useremail", user.email);
             setIsLoading(false);
         })
         .catch((error) => {
@@ -60,7 +74,7 @@ const useFirebase = () => {
 
     // save user
     const saveUser = (email, displayName) => {
-        const user = {email: email, displayName: displayName};
+        const user = {email: email, displayName: displayName, role: 'user'};
         fetch('http://localhost:5000/save-user', {
             method: 'POST',
             headers: {
@@ -77,11 +91,27 @@ const useFirebase = () => {
         })
     }
 
+    // check if current user is an admin or normal user
+    useEffect(() => {
+        fetch(`http://localhost:5000/single-user/${user.email}`)
+        .then(res => res.json())
+        .then((data) => {
+            if (data.role === "admin") {
+                localStorage.setItem("username", data.displayName);
+                localStorage.setItem("useradmin", true);
+            } else {
+                localStorage.setItem("username", data.displayName);
+                localStorage.setItem("useradmin", false);
+            }
+        })
+    }, [user.email]);
+
     return {
         user,
         isLoading,
         authError,
         registerUser,
+        login,
         logout
     }
 }

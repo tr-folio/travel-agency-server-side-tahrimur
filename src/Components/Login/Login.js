@@ -1,8 +1,11 @@
 import React from "react";
-import { Container } from "react-bootstrap";
+import { Container, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import useFirebase from "../../Hooks/useFirebase";
+import Header from "../Shared/Header";
 
 const Login = () => {
+    const { login, user, isLoading, authError } = useFirebase();
     const loginData = {
         email: '',
         password: ''
@@ -16,10 +19,11 @@ const Login = () => {
 
     const handleLogin = (event) => {
         event.preventDefault();
-        window.alert("Please wait");
+        login(loginData.email, loginData.password);
     }
     return (
         <div>
+            <Header/>
             <h1>Please Login</h1>
             <Container>
                 <form onSubmit={handleLogin}>
@@ -30,6 +34,12 @@ const Login = () => {
                 <p className="py-3">
                     <Link to="/register">Register here</Link>
                 </p>
+                <br/>
+                <div>
+                    {isLoading && <Spinner animation="border" variant="primary"></Spinner>}
+                    {user?.email && <p className="text-success">Login Successful</p>}
+                    {authError && <p className="text-success">{authError}</p>}
+                </div>
             </Container>
         </div>
     );
